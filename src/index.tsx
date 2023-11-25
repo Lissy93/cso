@@ -1,9 +1,12 @@
-/* @refresh reload */
-import { render } from 'solid-js/web'
-
+import { render } from 'solid-js/web';
+import AppRoutes from './Routes';
 import './index.css'
-import App from './App'
+import './App.scss'
 
-const root = document.getElementById('root')
 
-render(() => <App />, root!)
+render(
+  () => (
+    <AppRoutes />
+  ),
+  document.getElementById('snack-champion-root')
+);

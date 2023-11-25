@@ -1,8 +1,13 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+#snack-champion-root {
+  min-width: 100%;
+  min-height: 100vh;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .logo {
@@ -24,4 +29,8 @@
 
 .read-the-docs {
   color: #888;
+}
+
+body {
+  background: #d82036;
 }
