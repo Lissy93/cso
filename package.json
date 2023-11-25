@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@solidjs/router": "^0.9.1",
+    "@supabase/supabase-js": "^2.38.5",
     "solid-js": "^1.8.5"
   },
   "devDependencies": {
