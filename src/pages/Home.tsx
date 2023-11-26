@@ -1,4 +1,19 @@
 import { useUserEmail } from '../services/authService';
+import { styled } from 'solid-styled-components';
+
+import RequestSnack from '../components/SnackStuff/RequestSnack';
+
+const HomeWrapper = styled('div')`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+`;
+
+const WelcomeMsg = styled('h2')`
+  font-size: 3rem;
+  margin: 0.5rem 0 1rem;
+  text-transform: capitalize;
+`;
 
 export default function HomePage() {
 
@@ -9,8 +24,9 @@ export default function HomePage() {
   };
 
   return (
-    <div>
-      <h2>Hey {getNameFromEmail(userEmail())} 👋</h2>
-    </div>
+    <HomeWrapper>
+      <WelcomeMsg>Hey {getNameFromEmail(userEmail())} 👋</WelcomeMsg>
+      <RequestSnack />
+    </HomeWrapper>
   );
 }
