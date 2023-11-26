@@ -1,10 +1,9 @@
 import supabase from './supabaseClient';
 import { createSignal, createEffect } from 'solid-js';
 
-
 // Signals for authentication state and user details
 export const [isAuthenticated, setIsAuthenticated] = createSignal(false);
-export const [userEmail, setUserEmail] = createSignal('');
+const [userEmail, setUserEmail] = createSignal('');
 
 // Check and update authentication state
 createEffect(async () => {
@@ -13,7 +12,6 @@ createEffect(async () => {
   setUserEmail(session?.user?.email || '');
   localStorage.setItem('supabase.auth.token', session?.access_token || '');
 });
-
 
 export const login = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
@@ -29,7 +27,6 @@ export const login = async () => {
   console.log(error);
 }
 
-
 export const logout = async () => {
   await supabase.auth.signOut();
   localStorage.removeItem('supabase.auth.token');
@@ -37,14 +34,9 @@ export const logout = async () => {
   setUserEmail('');
 }
 
+export const rehydrateAuth = () => {
+  supabase.auth.getSession()
+};
 
-export const rehydrateAuth = async () => {
-  const session = await supabase.auth.getSession();
-  if (session) {
-    setIsAuthenticated(true);
-    // setUserEmail(session?.data.user?.email || '');
-  }
-}
-
-
+export const useUserEmail = () => userEmail;
 

@@ -1,10 +1,16 @@
-// import { logout } from '../services/authService';
+import { useUserEmail } from '../services/authService';
 
 export default function HomePage() {
+
+  const userEmail = useUserEmail();
+
+  const getNameFromEmail = (email: string) => {
+    return email.split('.')[0] || email;
+  };
+
   return (
     <div>
-      <h1>Home Page</h1>
-      {/* <button onClick={logout}>Logout</button> */}
+      <h2>Hey {getNameFromEmail(userEmail())} 👋</h2>
     </div>
   );
 }
