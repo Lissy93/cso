@@ -503,6 +503,11 @@
     hey-listen "^1.0.8"
     tslib "^2.3.1"
 
+"@popperjs/core@^2.11.8":
+  version "2.11.8"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
+  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
+
 "@rollup/rollup-android-arm-eabi@4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.5.0.tgz#5984f98288150a2c34928de023bbd122d61ce754"
@@ -591,6 +596,67 @@
   version "0.9.1"
   resolved "https://registry.yarnpkg.com/@solidjs/router/-/router-0.9.1.tgz#d7ec28be68c67a32d16b6578cb63e70eb4d1415c"
   integrity sha512-kRY75piOQsyoH75E/RP6lr7uVGFCjeeCCCJx7Z2D1Vc6+I1yFQjLCvE+6agXGwqDoWi6vbETP1g7gmp/L1mNLg==
+
+"@suid/base@0.8.5":
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/@suid/base/-/base-0.8.5.tgz#dee33b78ce63cb7ea93d657870d3cd279a112e8b"
+  integrity sha512-34Nu44f71ALOb2GEaiyhzAO6cA2EdjsySLBGaI9cV4vuHZpCXDrYVH0DjqNGD+ryEzURUf/tGu+zSREjJS1KiA==
+  dependencies:
+    "@popperjs/core" "^2.11.8"
+    "@suid/css" "0.4.0"
+    "@suid/system" "0.10.5"
+    "@suid/types" "0.5.3"
+    "@suid/utils" "0.8.0"
+    clsx "^2.0.0"
+
+"@suid/css@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@suid/css/-/css-0.4.0.tgz#e48bc2172225cf11361cb9568a885bd40f03311f"
+  integrity sha512-yzHAlf1CVi7n0SvUrMgs8Z49UiS9669+td1w1frekhRQuRbkXhHoyJkvovaDVJlWRmCPA8Q0f1OTr0uDCUg9mQ==
+
+"@suid/material@^0.15.1":
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/@suid/material/-/material-0.15.1.tgz#4d84adf6ddfc232753e554b7fb56b8e61dd129e8"
+  integrity sha512-pHX4qmqqsaIcPmTEdJVurqwwbxoiRXpOzXdE+Q6PZ63xqugBn6iGXFvw5AgNTOw9CMCRhfzVwhn5V2sqASLu+Q==
+  dependencies:
+    "@suid/base" "0.8.5"
+    "@suid/css" "0.4.0"
+    "@suid/system" "0.10.5"
+    "@suid/types" "0.5.3"
+    "@suid/utils" "0.8.0"
+    clsx "^2.0.0"
+
+"@suid/styled-engine@0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@suid/styled-engine/-/styled-engine-0.6.1.tgz#701815ce797e1062d123e9e4cfb1eeaade6d5bc5"
+  integrity sha512-2pcqqz3ZS1mPkjaSiQqLgZs6SWBnyH/np8xZHWpdvNwavkZtsiDM9tuFnfi10JtSSAUvbnfyA0QUWRRrw56XjA==
+  dependencies:
+    "@suid/css" "0.4.0"
+    "@suid/utils" "0.8.0"
+
+"@suid/system@0.10.5":
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/@suid/system/-/system-0.10.5.tgz#af50963e7392819ecb01d3918ffcda384f89efc8"
+  integrity sha512-56Q2MpIrOUoDn+OeN/QuO4Y+u7fhJ9IPJFpXXCG36n7KAzspQnFxTUZM+SdxPdSYuVwjeKfwMrXqhUkvTdrOzw==
+  dependencies:
+    "@suid/css" "0.4.0"
+    "@suid/styled-engine" "0.6.1"
+    "@suid/types" "0.5.3"
+    "@suid/utils" "0.8.0"
+    clsx "^2.0.0"
+    csstype "^3.1.2"
+
+"@suid/types@0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@suid/types/-/types-0.5.3.tgz#8d1c32811804a94356a3dd8fa3e10384668ddecd"
+  integrity sha512-lawR7jUYuvCjkqNeF+ptCAWCRukh3ocUBz3v+zdP/EzS6OHCmJiAzoYlMUgrqxkEcI3JfSpd6u3atZ8/pkDdpQ==
+
+"@suid/utils@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@suid/utils/-/utils-0.8.0.tgz#3d4f4a792ecbf7028c14b0cfdf3a2769c2147020"
+  integrity sha512-4HT5Ou6EWZviXQEm3DoX2BJZ3vASEmfKikXMWwSA5TaqKhU1dk7bSVaM0Ol8kch4Eyvl145KYmifKl9PD2cXAg==
+  dependencies:
+    "@suid/types" "0.5.3"
 
 "@supabase/functions-js@^2.1.5":
   version "2.1.5"
@@ -792,6 +858,11 @@ chalk@^2.4.2:
   optionalDependencies:
     fsevents "~2.3.2"
 
+clsx@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-2.0.0.tgz#12658f3fd98fafe62075595a5c30e43d18f3d00b"
+  integrity sha512-rQ1+kcj+ttHG0MKVGBUXwayCCF1oh39BF5COIpRzuCEv8Mwjv0XucrI2ExNTOn9IlLifGClWQcU9BrZORvtw6Q==
+
 color-convert@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
@@ -809,7 +880,7 @@ convert-source-map@^2.0.0:
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-2.0.0.tgz#4b560f649fc4e918dd0ab75cf4961e8bc882d82a"
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
 
-csstype@^3.1.0:
+csstype@^3.1.0, csstype@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
