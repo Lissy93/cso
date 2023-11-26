@@ -14,6 +14,17 @@
     a {
       text-decoration: none;
       color: var(--foreground);
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      transition: all 0.2s ease-in-out;
+      img {
+        width: 2rem;
+      }
+      &:hover {
+        opacity: 0.8;
+        transform: scale(1.04);
+      }
     }
   }
 
