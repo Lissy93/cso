@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@motionone/solid": "^10.16.4",
     "@solidjs/router": "^0.9.1",
     "@supabase/supabase-js": "^2.38.5",
-    "solid-js": "^1.8.5"
+    "solid-js": "^1.8.5",
+    "solid-styled-components": "^0.28.5"
   },
   "devDependencies": {
     "sass": "^1.69.5",
