@@ -8,6 +8,9 @@ const styles = `
   .card {
     background: var(--background-lighter);
     border-radius: 8px;
+    overflow: hidden;
+    padding: 0.5rem 1rem;
+    box-shadow: 2px 2px 3px #0000005e;
   }
 `;
 

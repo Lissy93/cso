@@ -27,7 +27,7 @@ const sizes = {
     font-size: 0.75rem;
   }`,
   medium: `.button {
-    font-size: 1rem;
+    font-size: 1.5rem;
     padding: 0.25rem 0.5rem;
   }`,
   large: `.button {
