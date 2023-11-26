@@ -27,13 +27,6 @@ body {
 #snack-champion-root {
   min-width: 100%;
   min-height: 100vh;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-  }
 }
 
 .logo {
