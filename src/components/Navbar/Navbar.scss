@@ -2,30 +2,42 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
-  color: white;
-  width: 100%;
+  background-color: var(--primary);
+  color: var(--foreground);
+  width: calc(100% - 2rem);
+  padding: 0.5rem 1rem;
 
   .navbar-brand {
+    font-family: PoppinsBold;
     font-size: 1.5rem;
     font-weight: bold;
+    a {
+      text-decoration: none;
+      color: var(--foreground);
+    }
   }
 
   .navbar-links {
     list-style: none;
     display: flex;
-    gap: 1rem;
-
+    gap: 0.25rem;
+    margin: 0;
     li {
+      margin: 0;
       a, button {
-        color: white;
+        color: var(--foreground);
         text-decoration: none;
         background: none;
         border: none;
         cursor: pointer;
+        font-size: 1rem;
+        border-radius: 4px;
+        padding: 0.25rem 0.5rem;
+        transition: 0.1s ease-in-out;
 
         &:hover {
           text-decoration: underline;
+          background: var(--primary-darker);
         }
       }
     }
