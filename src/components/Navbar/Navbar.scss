@@ -1,16 +1,17 @@
 .navbar {
   display: flex;
+  position: relative;
   justify-content: space-between;
-  align-items: center;
   background-color: var(--primary);
   color: var(--foreground);
-  width: calc(100% - 2rem);
-  padding: 0.5rem 1rem;
+  width: 100%;
+  padding: 0;
 
   .navbar-brand {
     font-family: PoppinsBold;
     font-size: 1.5rem;
     font-weight: bold;
+    padding: 0.5rem 1rem;
     a {
       text-decoration: none;
       color: var(--foreground);
@@ -33,8 +34,20 @@
     display: flex;
     gap: 0.25rem;
     margin: 0;
+    position: relative;
     li {
       margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0 0.5rem;
+      cursor: pointer;
+      img {
+        border-radius: 50%;
+      }
+      &:hover {
+        background: var(--primary-darker);
+      }
       a, button {
         color: var(--foreground);
         text-decoration: none;
@@ -45,12 +58,12 @@
         border-radius: 4px;
         padding: 0.25rem 0.5rem;
         transition: 0.1s ease-in-out;
-
+        height: 100%;
         &:hover {
           text-decoration: underline;
           background: var(--primary-darker);
         }
-      }
+      }      
     }
   }
 }
@@ -69,5 +82,34 @@
       width: 100%;
       text-align: left;
     }
+  }
+}
+
+.drop-down {
+  position: absolute;
+  top: 100%;
+  right: 0.5rem;
+  background: var(--background-lighter);
+  border-radius: 0 0 4px 4px;
+  list-style: none;
+  padding: 0;
+  z-index: 2;
+  border: 1px solid var(--background);
+  box-shadow: 2px 2px 3px #0000005e;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  a, span {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    color: var(--foreground);
+    padding: 0.5rem 1rem;
+    &:hover {
+      background: var(--primary-darker);
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--background-lighter-lighter);
+    }    
   }
 }

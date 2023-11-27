@@ -1,9 +1,13 @@
-import { Component, createSignal } from 'solid-js';
-import { isAuthenticated, login, logout } from '../../services/authService';
+import { Component, Show, createResource, createSignal } from 'solid-js';
+import { isAuthenticated, fetchUserFromSession, login, logout } from '../../services/authService';
 import Donut from '../../assets/donut.svg';
 import './Navbar.scss';
 
 const Navbar: Component = () => {
+
+  const [session] = createResource(fetchUserFromSession);
+
+  const [menuOpen, setMenuOpen] = createSignal(false);
 
   return (
     <nav class="navbar">
@@ -14,14 +18,26 @@ const Navbar: Component = () => {
         </a>
       </div>
       <ul class="navbar-links">
-        <li><a href="/about">About</a></li>
-        <li><a href="https://github.com/lissy93/cso" target="_blank">Source Code</a></li>
         {isAuthenticated() ? (
-          <li><button onClick={logout}>Logout</button></li>
+          <>
+          <li onClick={() => { setMenuOpen(!menuOpen()) }}>
+            <span>{session()?.user_metadata?.full_name || 'User'}</span>
+            <img src={session()?.user_metadata.picture} alt="Profile" width="38" />
+          </li>
+          </>
         ) : (
           <li><button onClick={login}>Login</button></li>
         )}
       </ul>
+      <Show when={menuOpen()}>
+        <div class="drop-down" onClick={() => { setMenuOpen(false) }}>
+          <a href="/profile">👤 Profile</a>
+          <a href="/profile">⚙️ Preferences</a>
+          <a href="#">🐛 Report a Bug</a>
+          <a href="https://github.com/lissy93/cso">💽 Source Code</a>
+          <span onClick={logout}>🏃 Logout</span>
+        </div>
+      </Show>
     </nav>
   );
 };
