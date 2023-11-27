@@ -2,10 +2,10 @@
 import { styled } from "solid-styled-components";
 
 import Card from '../components/atoms/Card';
-import Button from '../components/atoms/Button';
 
 import AccountPreferences from '../components/fragments/AccountPreferences';
 import AccountInfo from '../components/fragments/AccountInfo';
+import AccountDeletion from '../components/fragments/AccountDeletion';
 
 const ProfileWrapper = styled('div')`
   display: flex;
@@ -26,15 +26,8 @@ export default function Profile () {
   return (
     <ProfileWrapper>
       <AccountInfo />
-
       <AccountPreferences />
-
-      <Card>
-        <SubHeading>Account Deletion</SubHeading>
-        <p>Delete your account, and all associated data, from Snack Champion.</p>
-        <p>Warning: this action is irreversible!</p>
-        <Button size="small" onClick={() => {}}>Delete Account</Button>
-      </Card>
+      <AccountDeletion />
       <Card>
         <SubHeading>About & Privacy</SubHeading>
       </Card>      
