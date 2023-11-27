@@ -1,6 +1,7 @@
 import { Component, createSignal, createEffect, onCleanup, Show } from 'solid-js';
 import { styled } from 'solid-styled-components';
 import { Motion, Presence } from '@motionone/solid'
+import toast from 'solid-toast';
 
 import supabase from '../../services/supabaseClient'
 import { fetchUserFromSession } from '../../services/authService'
@@ -41,7 +42,6 @@ const SubHeading = styled('h2')`
 `;
 
 const fetchUserSnacks = async () => {
-  
   const userId = (await fetchUserFromSession())?.id;
   if (userId) {
     const { data, error } = await supabase
@@ -50,7 +50,7 @@ const fetchUserSnacks = async () => {
       .eq('user_id', userId);
 
     if (error) {
-      console.error('Error fetching snacks:', error);
+      toast.error(`Unable to fetch snacks.\n${error.message}`);
       return [];
     }
     return data;
@@ -75,12 +75,12 @@ const RequestSnack: Component = () => {
       setUserId(session.data.session.user.id);
       setUserSnacks(await fetchUserSnacks());
     } else {
-      console.error('No active session found');
+      toast.error('Your session has been invalidated. Please log in again.');
     }
   });
   
 
-  // Set up a channel for real-time updates
+  // Set up a channel for real-time snackdates
   const snackChannel = supabase
     .channel('snack_updates')
     .on(
@@ -93,39 +93,57 @@ const RequestSnack: Component = () => {
       }
     )
     .subscribe();
-
+  
+  // Unsubscribe from live snack updates, when component unmounts
   onCleanup(() => {
     supabase.removeChannel(snackChannel);
   });
 
-  const handleInputChange = (event: Event) => {
+  const handleInputChange = (event: KeyboardEvent | Event) => {
+    // Update the input signal
     const target = event.target as HTMLInputElement;
     setInputValue(target.value);
+    // If user presses Enter key, submit the snack
+    if (event instanceof KeyboardEvent && event.key === 'Enter') {
+      handleSubmit();
+    }
   };
 
   const handleSubmit = async () => {
+    // Get snack name, and exit early if empty
     const snackName = inputValue();
-    if (snackName) {
-      // Get the currently logged-in user's ID
-      const session = await (await supabase.auth.getSession()).data.session
-      const userId = session?.user?.id;
-  
-      // Ensure the user is logged in
-      if (userId) {
-        // Add the snack to the Supabase table with the user ID
-        const { data, error } = await supabase
-          .from('Snacks')
-          .insert([{ snack_name: snackName, user_id: userId }]);
-  
-        if (error) {
-          console.error('Error inserting snack:', error.message);
-        } else {
-          console.log('Snack added:', data);
-          setInputValue(''); // Clear the input field after submission
-        }
-      } else {
-        console.error('User not logged in');
-      }
+    if (!snackName) {
+      toast.error('Please enter a snack name');
+      return;
+    }
+
+    // If snack already added, show error and exit early
+    if (userSnacks().some((snack) => snack.snack_name.toLowerCase() === snackName.toLowerCase())) {
+      toast.error('You have already added this snack');
+      return;
+    }
+
+    // Get the currently logged-in user's ID
+    const session = await (await supabase.auth.getSession()).data.session
+    const userId = session?.user?.id;
+    
+    // Exit early if not valid user session
+    if (!userId) {
+      toast.error('Unable to add snack, your session has expired. Please log in again.');
+      return;
+    }
+
+    // Add the snack into the database
+    const { error } = await supabase
+      .from('Snacks')
+      .insert([{ snack_name: snackName, user_id: userId }]);
+
+    // Show a success / error toast
+    if (error) {
+      toast.error('Unable to add snack 😢');
+    } else {
+      toast.success('Snack added! 🎉');
+      setInputValue('');
     }
   };
 
@@ -137,7 +155,8 @@ const RequestSnack: Component = () => {
           type="text" 
           placeholder="Start typing..." 
           value={inputValue()} 
-          onInput={handleInputChange} 
+          onKeyDown={handleInputChange}
+          onInput={handleInputChange}
         />
         <Presence>
         <Show when={inputValue().length > 0}>

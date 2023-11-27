@@ -34,7 +34,7 @@ const SnackList: Component<SnackListProps> = (props) => {
       <For each={props.snacks()}>
         {(snack) => (
           <li>
-            <img src={`https://snack-product-photo.as93.workers.dev/${snack.snack_name}/96`} alt="Snack" />
+            <img src={`https://snack-product-photo.as93.workers.dev/${snack.snack_name}/96`} alt="" />
             {snack.snack_name}
           </li>
         )}
