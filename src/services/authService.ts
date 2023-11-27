@@ -40,3 +40,7 @@ export const rehydrateAuth = () => {
 
 export const useUserEmail = () => userEmail;
 
+export const fetchUserFromSession = async () => {
+  const session = await (await supabase.auth.getSession()).data.session
+  return session?.user
+};
