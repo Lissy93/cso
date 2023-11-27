@@ -14,7 +14,8 @@
     "@suid/material": "^0.15.1",
     "@supabase/supabase-js": "^2.38.5",
     "solid-js": "^1.8.5",
-    "solid-styled-components": "^0.28.5"
+    "solid-styled-components": "^0.28.5",
+    "solid-toast": "^0.5.0"
   },
   "devDependencies": {
     "sass": "^1.69.5",
