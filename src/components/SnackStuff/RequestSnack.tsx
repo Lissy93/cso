@@ -89,7 +89,11 @@ const fetchUserSnacks = async () => {
   return [];
 };
 
-const RequestSnack: Component = () => {
+interface Props {
+  style?: string;
+}
+
+const RequestSnack: Component<Props> = (props) => {
   const [inputValue, setInputValue] = createSignal('');
   const [userSnacks, setUserSnacks] = createSignal<Snack[]>([]);
   const [userId, setUserId] = createSignal<string | null>(null);
@@ -108,7 +112,7 @@ const RequestSnack: Component = () => {
 
   // Set up a channel for real-time snackdates
   const snackChannel = supabase
-    .channel('snack_updates')
+    .channel('snack_request_updates')
     .on(
       'postgres_changes',
       { event: 'INSERT', schema: 'public', table: 'Snacks' },
@@ -176,6 +180,10 @@ const RequestSnack: Component = () => {
   const handleDeleteSnack = async (snack: Snack) => {
     const { error } = await supabase.from('Snacks').delete().eq('snack_id', snack.snack_id);
     if (error) {
+      if (error.code === '23503') {
+        toast.error(`Unable to delete snack.\nYou cannot delete a snack that has already been voted on.`);
+        return;
+      }
       toast.error(`Unable to delete snack.\n${error.message}`);
     } else {
       toast.success(`Deleted snack: ${snack.snack_name}`);
@@ -184,7 +192,7 @@ const RequestSnack: Component = () => {
   };
 
   return (
-    <Card>
+    <Card style={props.style}>
       <SubHeading>Request Snack</SubHeading>
       <SnackForm>
         <SnackInputField 

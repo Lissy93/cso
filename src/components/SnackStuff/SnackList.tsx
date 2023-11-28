@@ -47,8 +47,13 @@ const SnackListWrap = styled('ul')`
 const VotesContainer = styled('div')`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   height: 100%;
+  .vote-count {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-family: PoppinsBold;
+  }
   .vote-arrow {
     display: flex;
     align-items: center;
@@ -63,9 +68,13 @@ const VotesContainer = styled('div')`
         filter: drop-shadow(2px 2px 1px #000);
       }
     }
-    .vote-count {
-      font-size: 0.8rem;
-      color: var(--primary);
+    &.vote-down {
+      span{
+        color: var(--primary-opposite);
+      }
+      img {
+        filter: hue-rotate(200deg) saturate(0.9) brightness(1.6);
+      }
     }
   }
 `;
@@ -87,11 +96,11 @@ const SnackList: Component<SnackListProps> = (props) => {
           <li>
             { ('Votes' in snack && props.snackVoteChecker) && (
               <VotesContainer>
-                <div class="vote-arrow" onClick={() => props.handleVote ? props.handleVote(snack, 'up') : () => {}}>
+                <div class="vote-arrow vote-up" onClick={() => props.handleVote ? props.handleVote(snack, 'up') : () => {}}>
                   <img src={props.snackVoteChecker(snack) === 'up' ? UpVoteSolid : UpVoteEmpty} alt="" />
                   <span class="vote-count">{snack.Votes.filter((vote: Vote) => vote.vote === 'up').length}</span>
                 </div>
-                <div class="vote-arrow" onClick={() => props.handleVote ? props.handleVote(snack, 'down') : () => {}}>
+                <div class="vote-arrow vote-down" onClick={() => props.handleVote ? props.handleVote(snack, 'down') : () => {}}>
                   <img src={props.snackVoteChecker(snack) === 'down' ? DownVoteSolid : DownVoteEmpty} alt="" />
                   <span class="vote-count">{snack.Votes.filter((vote: Vote) => vote.vote === 'down').length}</span>
                 </div>
