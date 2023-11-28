@@ -2,6 +2,7 @@ import { Component, createSignal, createEffect, onCleanup, Show } from 'solid-js
 import { styled } from 'solid-styled-components';
 import { Motion, Presence } from '@motionone/solid'
 import toast from 'solid-toast';
+import donut from '../../assets/donut.svg';
 
 import type { Snack } from '../../typings/Snack';
 
@@ -41,6 +42,34 @@ const SnackInputField = styled('input')`
 
 const SubHeading = styled('h2')`
   margin: 0 0 1rem;
+`;
+
+const NoSnacksYet = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 50%;
+    max-width: 200px;
+    margin: 1rem auto;
+    opacity: 0.5;
+    filter: drop-shadow(10px 10px 10px #000);
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.04);
+      filter: drop-shadow(15px 15px 15px #000);
+    }
+  }
+  .nout {
+    font-family: PoppinsBold, sans-serif;
+    font-size: 1.2rem;
+    margin: 0.25rem auto;
+    opacity: 0.5;
+  }
+  .why-nout {
+    opacity: 0.5;
+    margin: 0.25rem auto;
+  }
 `;
 
 const fetchUserSnacks = async () => {
@@ -180,6 +209,15 @@ const RequestSnack: Component = () => {
       </SnackForm>
 
       <SubHeading>Your Requests</SubHeading>
+      <Show when={userSnacks().length === 0}>
+        <NoSnacksYet>
+          <img src={donut} alt="donuts r yum" />
+          <p class="nout">Nothing Yet!</p>
+          <p class="why-nout">
+            Get started by typing the name of a snack you'd like in the input above, then hit <strong>Request</strong>!
+          </p>
+        </NoSnacksYet>
+      </Show>
       <SnackList allowDeletion={true} snacks={userSnacks} handleDeletion={handleDeleteSnack} />      
     </Card>
   );
