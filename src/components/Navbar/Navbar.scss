@@ -32,9 +32,12 @@
   .navbar-links {
     list-style: none;
     display: flex;
-    gap: 0.25rem;
     margin: 0;
     position: relative;
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+
     li {
       margin: 0;
       display: flex;
@@ -42,6 +45,7 @@
       gap: 0.5rem;
       padding: 0 0.5rem;
       cursor: pointer;
+      transition: all 0.2s ease-in-out;
       img {
         border-radius: 50%;
       }
@@ -56,14 +60,14 @@
         cursor: pointer;
         font-size: 1rem;
         border-radius: 4px;
-        padding: 0.25rem 0.5rem;
         transition: 0.1s ease-in-out;
         height: 100%;
-        &:hover {
-          text-decoration: underline;
-          background: var(--primary-darker);
-        }
-      }      
+        display: flex;
+        align-items: center;
+      }
+      &:not(:last-child) {
+        border-right: 1px solid var(--primary-darker);
+      }
     }
   }
 }

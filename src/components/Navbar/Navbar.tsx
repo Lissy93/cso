@@ -20,6 +20,11 @@ const Navbar: Component = () => {
       <ul class="navbar-links">
         {isAuthenticated() ? (
           <>
+          <li><a href="/request">Request Snack</a></li>
+          <li><a href="/vote">Get Voting</a></li>
+          <li><a href="/stats">Snack Stats</a></li>
+          <li><a href="/snack-ai">AI Suggestions</a></li>
+          <li><a href="/profile">Your Profile</a></li>
           <li onClick={() => { setMenuOpen(!menuOpen()) }}>
             <span>{session()?.user_metadata?.full_name || 'User'}</span>
             <img src={session()?.user_metadata.picture} alt="Profile" width="38" />
@@ -31,8 +36,13 @@ const Navbar: Component = () => {
       </ul>
       <Show when={menuOpen()}>
         <div class="drop-down" onClick={() => { setMenuOpen(false) }}>
-          <a href="/profile">👤 Profile</a>
-          <a href="/profile">⚙️ Preferences</a>
+          <Show when={location.pathname !== '/'}>
+            <a href="/">🏠 Home</a>
+          </Show>
+          <Show when={location.pathname !== '/profile'}>
+            <a href="/profile">👤 Profile</a>
+            <a href="/profile">⚙️ Preferences</a>
+          </Show>
           <a href="#">🐛 Report a Bug</a>
           <a href="https://github.com/lissy93/cso">💽 Source Code</a>
           <span onClick={logout}>🏃 Logout</span>
