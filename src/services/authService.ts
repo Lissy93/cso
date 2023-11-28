@@ -1,5 +1,6 @@
 import supabase from './supabaseClient';
 import { createSignal, createEffect } from 'solid-js';
+import toast from 'solid-toast';
 
 // Signals for authentication state and user details
 export const [isAuthenticated, setIsAuthenticated] = createSignal(false);
@@ -23,8 +24,9 @@ export const login = async () => {
       },
     },
   });
-  // TODO: handle error
-  console.log(error);
+  if (error) {
+    toast.error(`We were unable to authenticate you\n${error.message}`);
+  }
 }
 
 export const logout = async () => {
