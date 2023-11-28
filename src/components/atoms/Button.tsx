@@ -29,11 +29,12 @@ const sizes = {
   medium: `.button {
     font-size: 1.5rem;
     padding: 0.25rem 0.5rem;
+    height: 100%;
   }`,
   large: `.button {
     font-size: 2rem;
     margin: 1rem auto;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 2rem;
   }`,
 };
 
