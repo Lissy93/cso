@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Alert, AlertTitle,
 } from '@suid/material';
 
 const SubHeading = styled('h2')`
@@ -50,8 +51,12 @@ export default function AccountInfo() {
         <DialogContent>
           <DialogContentText>
             <DialogInner>
-              This action is permanent and cannot be undone.<br />
-              All of your data will be deleted from our servers.
+              <Alert severity="error">
+                <AlertTitle>Important!</AlertTitle>
+                This action is permanent and cannot be undone.<br />
+                All of your data will be deleted from our servers.
+              </Alert>
+              <Info>y u no like snak?</Info>
             </DialogInner>
           </DialogContentText>
         </DialogContent>

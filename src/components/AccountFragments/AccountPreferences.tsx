@@ -39,6 +39,9 @@ export default function AccountPreferences() {
   const [language, setLanguage] = createSignal('en-GB');
   const [errorTracking, setErrorTracking] = createSignal(false);
   const [analytics, setAnalytics] = createSignal(false);
+  // const [disableAnimations, setDisableAnimations] = createSignal(false);
+  // const [highContrast, setHighContrast] = createSignal(false);
+  // const [largeFont, setLargeFont] = createSignal(false);
 
   const handleSave = () => {
     // TODO: Implement save logic
@@ -46,7 +49,7 @@ export default function AccountPreferences() {
   };
 
   return (
-    <Card style="grid-row-start: span 2;">
+    <Card style="grid-row-start: span 3;">
     <SubHeading>Preferences</SubHeading>
     <FormControl>
       <PreferenceSection>
@@ -83,6 +86,7 @@ export default function AccountPreferences() {
             id="demo-simple-select"
             value={language()}
             label="Language"
+            sx={{ m: 1, width: 300 }}
             onChange={(event) => { setLanguage(event.target.value) }}
           >
             <MenuItem value="en-GB">English</MenuItem>
@@ -107,6 +111,21 @@ export default function AccountPreferences() {
           No personally identifiable information is collected. You can opt-out at any time.
         </SmallText>
       </PreferenceSection>
+
+      {/* <PreferenceSection>
+        <h3>Accessibility</h3>
+        <FormGroup>
+          <FormControlLabel disabled={true} control={
+            <Checkbox value={disableAnimations()} onChange={(_event, newVal) => { setDisableAnimations(newVal) }}/>
+          } label="Disable Animations" />
+          <FormControlLabel disabled={true} control={
+            <Checkbox value={highContrast()} onChange={(_event, newVal) => { setHighContrast(newVal) }}/>
+          } label="Use High-Contrast Mode" />
+          <FormControlLabel disabled={true} control={
+            <Checkbox value={largeFont()} onChange={(_event, newVal) => { setLargeFont(newVal) }}/>
+          } label="Use Extra-Large Font" />
+        </FormGroup>
+      </PreferenceSection> */}
 
       <PreferenceSection>
       <Button size="medium" onClick={handleSave}>Save Changes</Button>

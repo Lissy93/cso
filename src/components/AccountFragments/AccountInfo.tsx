@@ -13,7 +13,7 @@ const DataTable = styled('ul')`
   list-style: none;
   padding: 0;
   margin: 0.5rem;
-  width: fit-content;
+  max-width: 500px;
   li {
     display: flex;
     justify-content: space-between;
@@ -35,6 +35,13 @@ const DataTable = styled('ul')`
   }
 `;
 
+const SmallText = styled('p')`
+  font-size: 0.75rem;
+  opacity: 0.5;
+  margin: 0.5rem 0;
+`;
+
+
 const formatDate = (date: string | undefined) => {
   if (!date) return '';
   const d = new Date(date);
@@ -48,7 +55,7 @@ export default function AccountInfo() {
   const [session] = createResource(fetchUserFromSession);
 
   return (
-    <Card>
+    <Card style="grid-row-start: span 2;">
       <SubHeading>Account</SubHeading>
       <DataTable>
         <Show when={session()?.user_metadata}>
@@ -90,6 +97,11 @@ export default function AccountInfo() {
           <span class="val">{formatDate(session()?.last_sign_in_at)}</span>
         </li>
       </DataTable>
+
+      <SmallText>
+        This account is managed by an SSO provider.<br />
+        To update, export or delete your account data, you must do so via their website.
+      </SmallText>
     </Card>
   );
 }
