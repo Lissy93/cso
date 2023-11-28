@@ -15,6 +15,12 @@ const WelcomeMsg = styled('h2')`
   text-transform: capitalize;
 `;
 
+const Content = styled('div')`
+  max-width: 1000px;
+  width: 80vw;
+  margin: 0 auto;
+`;
+
 export default function HomePage() {
 
   const userEmail = useUserEmail();
@@ -26,7 +32,9 @@ export default function HomePage() {
   return (
     <HomeWrapper>
       <WelcomeMsg>Hey {getNameFromEmail(userEmail())} 👋</WelcomeMsg>
-      <RequestSnack />
+      <Content>
+        <RequestSnack />
+      </Content>
     </HomeWrapper>
   );
 }

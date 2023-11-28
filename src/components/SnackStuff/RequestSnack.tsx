@@ -3,6 +3,8 @@ import { styled } from 'solid-styled-components';
 import { Motion, Presence } from '@motionone/solid'
 import toast from 'solid-toast';
 
+import type { Snack } from '../../typings/Snack';
+
 import supabase from '../../services/supabaseClient'
 import { fetchUserFromSession } from '../../services/authService'
 import Card from '../atoms/Card';
@@ -58,14 +60,9 @@ const fetchUserSnacks = async () => {
   return [];
 };
 
-interface SnackType {
-  snack_name: string;
-  user_id: string;
-}
-
 const RequestSnack: Component = () => {
   const [inputValue, setInputValue] = createSignal('');
-  const [userSnacks, setUserSnacks] = createSignal<SnackType[]>([]);
+  const [userSnacks, setUserSnacks] = createSignal<Snack[]>([]);
   const [userId, setUserId] = createSignal<string | null>(null);
 
 
@@ -88,7 +85,7 @@ const RequestSnack: Component = () => {
       { event: 'INSERT', schema: 'public', table: 'Snacks' },
       (payload) => {
         if (payload.new.user_id === userId()) {
-          setUserSnacks([...userSnacks(), payload.new as SnackType]);
+          setUserSnacks([...userSnacks(), payload.new as Snack]);
         }
       }
     )
@@ -147,6 +144,16 @@ const RequestSnack: Component = () => {
     }
   };
 
+  const handleDeleteSnack = async (snack: Snack) => {
+    const { error } = await supabase.from('Snacks').delete().eq('snack_id', snack.snack_id);
+    if (error) {
+      toast.error(`Unable to delete snack.\n${error.message}`);
+    } else {
+      toast.success(`Deleted snack: ${snack.snack_name}`);
+      setUserSnacks(userSnacks().filter(snackSnack => snackSnack.snack_id !== snack.snack_id));
+    }
+  };
+
   return (
     <Card>
       <SubHeading>Request Snack</SubHeading>
@@ -173,7 +180,7 @@ const RequestSnack: Component = () => {
       </SnackForm>
 
       <SubHeading>Your Requests</SubHeading>
-      <SnackList snacks={userSnacks} />      
+      <SnackList allowDeletion={true} snacks={userSnacks} handleDeletion={handleDeleteSnack} />      
     </Card>
   );
 };
