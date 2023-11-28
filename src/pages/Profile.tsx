@@ -8,8 +8,8 @@ import AccountInfo from '../components/fragments/AccountInfo';
 import AccountDeletion from '../components/fragments/AccountDeletion';
 
 const ProfileWrapper = styled('div')`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: 2rem;
   padding: 2rem 0;
   margin: 0 auto;
@@ -28,7 +28,7 @@ export default function Profile () {
       <AccountInfo />
       <AccountPreferences />
       <AccountDeletion />
-      <Card>
+      <Card style="grid-column: 1 / -1;">
         <SubHeading>About & Privacy</SubHeading>
       </Card>      
     </ProfileWrapper>

@@ -46,7 +46,7 @@ export default function AccountPreferences() {
   };
 
   return (
-    <Card>
+    <Card style="grid-row-start: span 2;">
     <SubHeading>Preferences</SubHeading>
     <FormControl>
       <PreferenceSection>
