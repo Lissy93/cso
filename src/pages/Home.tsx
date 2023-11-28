@@ -2,23 +2,31 @@ import { useUserEmail } from '../services/authService';
 import { styled } from 'solid-styled-components';
 
 import RequestSnack from '../components/SnackStuff/RequestSnack';
+import SnackVoting from '../components/SnackStuff/SnackVoting';
 
 const HomeWrapper = styled('div')`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
+
 `;
 
 const WelcomeMsg = styled('h2')`
   font-size: 3rem;
-  margin: 0.5rem 0 1rem;
+  margin: 0.5rem auto 1rem auto;
   text-transform: capitalize;
+  max-width: 1200px;
+  width: 80vw;
 `;
 
 const Content = styled('div')`
-  max-width: 1000px;
+  max-width: 1200px;
   width: 80vw;
   margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  
+  margin: auto;
+
 `;
 
 export default function HomePage() {
@@ -33,7 +41,15 @@ export default function HomePage() {
     <HomeWrapper>
       <WelcomeMsg>Hey {getNameFromEmail(userEmail())} 👋</WelcomeMsg>
       <Content>
-        <RequestSnack />
+        <RequestSnack style="grid-column-start: span 2;" />
+        <SnackVoting
+          snackLimit={5}
+          channelName="newest_snack_updates"
+          title="Latest Requests"
+          sortOrder="newest"
+          description="Show these newly requested snacks some love if you want to see them in the office!"
+        />
+        <SnackVoting style="grid-column: 1 / -1;" />
       </Content>
     </HomeWrapper>
   );

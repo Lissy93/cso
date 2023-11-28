@@ -1,10 +1,22 @@
 import { useNavigate } from '@solidjs/router';
 
+import { styled } from 'solid-styled-components';
 import { isAuthenticated } from '../services/authService';
 import supabase from '../services/supabaseClient';
 import Card from '../components/atoms/Card';
 import Button from '../components/atoms/Button';
 import { createEffect } from 'solid-js';
+
+const SnackBot = styled('img')`
+  position: absolute;
+  bottom: 0;
+  right: 1rem;
+  transition: all 0.2s ease-in-out;
+  width: 100px;
+  &:hover {
+    transform: scale(1.1) translateY(-0.5rem) translateX(-0.25rem) rotate(-1deg);
+  }
+`;
 
 const LoginPage = () => {
 
@@ -62,7 +74,8 @@ const LoginPage = () => {
           <p class="intro">Ready for a Snack?</p>
           <p class="intro line-2">A quick login and you're on the snack attack track!</p>
           <p class="what">Securely authenticate with your company SSO in order to put in snack requests</p>
-          <Button onClick={signInWithGoogle} size="large">Login with Google</Button>
+          <Button onClick={signInWithGoogle} size="large">Let's Go!</Button>
+          <SnackBot width="180" src="https://i.ibb.co/d43WK4Z/snack-champ-robot-transparent.png" />
         </Card>
       </div>
     </>
