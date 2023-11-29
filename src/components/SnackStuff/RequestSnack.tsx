@@ -222,7 +222,7 @@ const RequestSnack: Component<Props> = (props) => {
           <img src={donut} alt="donuts r yum" />
           <p class="nout">Nothing Yet!</p>
           <p class="why-nout">
-            Get started by typing the name of a snack you'd like in the input above, then hit <strong>Request</strong>!
+            Get started by typing the name of a snack you'd like in the input above
           </p>
         </NoSnacksYet>
       </Show>
