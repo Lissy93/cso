@@ -86,7 +86,6 @@ const SnackVoting: Component<Props> = (props) => {
   const [allSnacks, setAllSnacks] = createSignal<SnackWithVotes[]>([]);
   const [sortedSnacks, setSortedSnacks] = createSignal<SnackWithVotes[]>([]);
   const [userId, setUserId] = createSignal<string | null>(null);
-  const [isSorted, setIsSorted] = createSignal(false);
   const [sortMethod, setSortMethod] = createSignal<SortMethod>(props.sortOrder || 'default');
 
   /**
@@ -164,8 +163,6 @@ const SnackVoting: Component<Props> = (props) => {
    */
   createEffect(() => {
     setSortedSnacks([...sortSnacks(allSnacks())]);
-    setIsSorted(true);
-    setTimeout(() => setIsSorted(false), 500);
   });
 
   /**
