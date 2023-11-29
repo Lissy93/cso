@@ -1,0 +1,14 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+ <title>Snack Champion</title>
+ <defs>
+  <filter id="svg_4_blur">
+   <feGaussianBlur stdDeviation="0.2" in="SourceGraphic"/>
+  </filter>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <path filter="url(#svg_4_blur)" stroke-width="0" id="svg_4" d="m99.09003,225.28348l229.18129,0l70.81878,-217.72123l70.81882,217.72123l229.18125,0l-185.41122,134.55758l70.82245,217.72123l-185.4113,-134.56124l-185.41126,134.56124l70.82247,-217.72123l-185.41128,-134.55758z" stroke="#000" fill="#a51c27"/>
+  <path stroke-width="0" id="svg_1" d="m105.09003,224.28348l229.18129,0l70.81878,-217.72123l70.81882,217.72123l229.18125,0l-185.41122,134.55758l70.82245,217.72123l-185.4113,-134.56124l-185.41126,134.56124l70.82247,-217.72123l-185.41128,-134.55758z" stroke="#000" fill="#d82036"/>
+  <text font-weight="bold" transform="matrix(9.97793, 0, 0, 8.26527, -3149.98, -2061.75)" xml:space="preserve" text-anchor="start" font-family="'Changa'" font-size="24" id="svg_3" y="298.08837" x="343.31634" stroke-width="0" stroke="#000" fill="#ffffff">SC</text>
+ </g>
+</svg>
