@@ -5,6 +5,7 @@ const HomeWrapper = styled('div')`
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+  flex: 1;
 `;
 
 const Content = styled('div')`
@@ -20,7 +21,11 @@ export default function HomePage() {
   return (
     <HomeWrapper>
       <Content>
-        <SnackVoting />
+        <SnackVoting
+          showSortMenu={true}
+          title="Get Voting!"
+          description="Your opinion matters! Vote for the snacks you want to see in the office."
+        />
       </Content>
     </HomeWrapper>
   );

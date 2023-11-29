@@ -1,6 +1,6 @@
 import { Component, Show, createResource, createSignal } from 'solid-js';
-import { isAuthenticated, fetchUserFromSession, login, logout } from '../../services/authService';
-import Donut from '../../assets/donut.svg';
+import { isAuthenticated, fetchUserFromSession, login, logout } from '../../../services/authService';
+import Donut from '../../../assets/donut.svg';
 import './Navbar.scss';
 
 const Navbar: Component = () => {

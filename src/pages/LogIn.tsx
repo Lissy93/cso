@@ -13,6 +13,7 @@ const SnackBot = styled('img')`
   right: 1rem;
   transition: all 0.2s ease-in-out;
   width: 100px;
+  z-index: 2;
   &:hover {
     transform: scale(1.1) translateY(-0.5rem) translateX(-0.25rem) rotate(-1deg);
   }
@@ -63,6 +64,7 @@ const LoginPage = () => {
     max-width: 800px;
     margin: 2rem auto;
     text-align: center;
+    flex: 1;
   }
   `;
 
@@ -75,7 +77,7 @@ const LoginPage = () => {
           <p class="intro line-2">A quick login and you're on the snack attack track!</p>
           <p class="what">Securely authenticate with your company SSO in order to put in snack requests</p>
           <Button onClick={signInWithGoogle} size="large">Let's Go!</Button>
-          <SnackBot width="180" src="https://i.ibb.co/d43WK4Z/snack-champ-robot-transparent.png" />
+          <SnackBot width="180" src="https://i.ibb.co/d43WK4Z/snack-champ-robot-transparent.png" title="Hello World 👋" />
         </Card>
       </div>
     </>

@@ -1,5 +1,7 @@
-import { createSignal, createEffect, Component, onCleanup } from 'solid-js';
+import { createSignal, createEffect, onCleanup, Component, Show } from 'solid-js';
 import toast from 'solid-toast';
+import { ToggleButton, ToggleButtonGroup, CircularProgress } from '@suid/material';
+
 import supabase from '../../services/supabaseClient';
 import SnackList from './SnackList';
 import type { Snack, SnackVote, SnackWithVotes } from '../../typings/Snack';
@@ -8,8 +10,47 @@ import { styled } from 'solid-styled-components';
 import { fetchUserFromSession } from '../../services/authService';
 
 const SubHeading = styled('h2')`
-  margin: 0 0 1rem;
+  margin: 0;
 `;
+
+const SubSubHeading = styled('p')`
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+`;
+
+const TopPartOfTheSnackVoteWidget = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
+
+const ShowMoreButton = styled('a')`
+  background: var(--primary);
+  padding: 0.1rem 0.5rem;
+  color: var(--foreground);
+  text-decoration: none;
+  border-radius: 4px;
+  margin: 1rem auto;
+  font-size: 1.1rem;
+  float: right;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background: var(--primary-darker);
+    transform: scale(1.05);
+  }
+`;
+
+const LoadingSection = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.5;
+  h3 { font-size: 2.5rem; }
+`;
+
+type SortMethod = 'default' | 'newest' | 'loved' | 'hated' | 'controversial' | 'alphabetical';
+
+const SortMenu = styled('div')``;
 
 /**
  * Queries the database for all snacks, and combines with all linked votes
@@ -34,15 +75,19 @@ interface Props {
   style?: string;
   title?: string;
   description?: string;
-  sortOrder?: string;
+  sortOrder?: SortMethod;
   channelName?: string;
   snackLimit?: number;
+  showSortMenu?: boolean;
+  showShowMoreButton?: boolean;
 }
 
 const SnackVoting: Component<Props> = (props) => {
   const [allSnacks, setAllSnacks] = createSignal<SnackWithVotes[]>([]);
   const [sortedSnacks, setSortedSnacks] = createSignal<SnackWithVotes[]>([]);
   const [userId, setUserId] = createSignal<string | null>(null);
+
+  const [sortMethod, setSortMethod] = createSignal<SortMethod>(props.sortOrder || 'default');
 
   /**
    * Sorts and limits the snack list, based on where the component's used
@@ -51,25 +96,54 @@ const SnackVoting: Component<Props> = (props) => {
    */
   const sortSnacks = (snacks: SnackWithVotes[]) => {
     let sorted = snacks;
-    if (props.sortOrder === 'newest') {
+    if (sortMethod() === 'newest') {
+      sorted = snacks.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    } else if (props.sortOrder === 'loved') {
       sorted = snacks.sort((a, b) => {
-        const dateA = new Date(a.created_at);
-        const dateB = new Date(b.created_at);
-        return dateB.getTime() - dateA.getTime();
+        const netVotesA = a.Votes.filter(vote => vote.vote === 'up').length;
+        const netVotesB = b.Votes.filter(vote => vote.vote === 'up').length;
+        return netVotesA - netVotesB;
+      });
+    } else if (sortMethod() === 'hated') {
+      sorted = snacks.sort((a, b) => {
+        const netVotesA = a.Votes.filter(vote => vote.vote === 'down').length;
+        const netVotesB = b.Votes.filter(vote => vote.vote === 'down').length;
+        return netVotesB - netVotesA;
+      });
+    } else if (sortMethod() === 'alphabetical') {
+      sorted = snacks.sort((a, b) => {
+        const nameA = a.snack_name.toUpperCase();
+        const nameB = b.snack_name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }      
+        return 0;
+      });
+    } else if (sortMethod() === 'controversial') {
+      sorted = snacks.sort((a, b) => {
+        const upVotesA = a.Votes.filter(vote => vote.vote === 'up').length;
+        const downVotesA = a.Votes.filter(vote => vote.vote === 'down').length;
+        const gapA = Math.abs(upVotesA - downVotesA);
+        const upVotesB = b.Votes.filter(vote => vote.vote === 'up').length;
+        const downVotesB = b.Votes.filter(vote => vote.vote === 'down').length;
+        const gapB = Math.abs(upVotesB - downVotesB);
+        return gapB - gapA;
       });
     } else {
       sorted = snacks.sort((a, b) => {
-        const upVotesA = a.Votes.filter(vote => vote.vote === 'up').length;
-        const upVotesB = b.Votes.filter(vote => vote.vote === 'up').length;
-        return upVotesB - upVotesA;
-      });
+        const netVotesA = a.Votes.filter(vote => vote.vote === 'up').length - a.Votes.filter(vote => vote.vote === 'down').length;
+        const netVotesB = b.Votes.filter(vote => vote.vote === 'up').length - b.Votes.filter(vote => vote.vote === 'down').length;
+        return netVotesB - netVotesA; // Sort in descending order of net votes
+      });      
     }
     if (props.snackLimit) {
       return sorted.slice(0, props.snackLimit);
     }
     return sorted;
   };
-  
 
   /**
    * On first render, pre-fetch the snacks + votes, and set user ID for later
@@ -89,7 +163,7 @@ const SnackVoting: Component<Props> = (props) => {
    * Whenever the snack list changes, sort and limit the list
    */
   createEffect(() => {
-    setSortedSnacks(sortSnacks(allSnacks()));
+    setSortedSnacks([...sortSnacks(allSnacks())]);
   });
 
   /**
@@ -194,7 +268,7 @@ const SnackVoting: Component<Props> = (props) => {
       const { error } = await supabase.from('Votes')
         .insert([{ snack_id: snackId, user_id: userId, vote: voteType }]);
       if (error) {
-        toast.error(`Unable to submit vote.\n${error.message}`);
+        toast.error('Unable to submit vote.');
       } else {
         toast.success('Vote saved successfully!');
       }
@@ -220,9 +294,35 @@ const SnackVoting: Component<Props> = (props) => {
 
   return (
     <Card style={props.style}>
-      <SubHeading>{props.title || 'Get Voting!'}</SubHeading>
-      {props.description && <p>{props.description}</p>}
+      <TopPartOfTheSnackVoteWidget>
+        <SubHeading>{props.title || 'Get Voting!'}</SubHeading>
+        {props.showSortMenu && (
+        <SortMenu>
+          <ToggleButtonGroup size="small" color="primary" value={[sortMethod()]}
+            onChange={(_clickEvent, something)=>{
+              setSortMethod(something[1] || 'default')
+            }}>
+            <ToggleButton value="default">Auto</ToggleButton>
+            <ToggleButton value="newest">Newest</ToggleButton>
+            <ToggleButton value="loved">Most Loved</ToggleButton>
+            <ToggleButton value="hated">Least Loved</ToggleButton>
+            <ToggleButton value="controversial">Most Controversial</ToggleButton>
+            <ToggleButton value="alphabetical">Alphabetical</ToggleButton>
+          </ToggleButtonGroup>
+        </SortMenu>
+        )}
+      </TopPartOfTheSnackVoteWidget>
+      {props.description && <SubSubHeading>{props.description}</SubSubHeading>}
+      <Show when={sortedSnacks().length < 1}>
+        <LoadingSection>
+          <h3>Loading</h3>
+          <CircularProgress color="secondary" size="93px" />
+        </LoadingSection>
+      </Show>
       <SnackList snacks={sortedSnacks} handleVote={handleVote} snackVoteChecker={getUserVoteForSnack} />
+      {(props.showShowMoreButton && sortedSnacks().length > (props.snackLimit || 20) - 1) && (
+        <ShowMoreButton href="vote">Show More</ShowMoreButton>
+      )}
     </Card>
   );
 };

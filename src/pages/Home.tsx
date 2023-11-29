@@ -5,7 +5,8 @@ import RequestSnack from '../components/SnackStuff/RequestSnack';
 import SnackVoting from '../components/SnackStuff/SnackVoting';
 
 const HomeWrapper = styled('div')`
-
+  padding-bottom: 2rem;
+  flex: 1;
 `;
 
 const WelcomeMsg = styled('h2')`
@@ -49,7 +50,7 @@ export default function HomePage() {
           sortOrder="newest"
           description="Show these newly requested snacks some love if you want to see them in the office!"
         />
-        <SnackVoting style="grid-column: 1 / -1;" />
+        <SnackVoting style="grid-column: 1 / -1;" showSortMenu={true} snackLimit={20} showShowMoreButton={true} />
       </Content>
     </HomeWrapper>
   );

@@ -2,10 +2,11 @@ import { styled } from 'solid-styled-components';
 
 import RequestSnack from '../components/SnackStuff/RequestSnack';
 
-const HomeWrapper = styled('div')`
+const RequestWrapper = styled('div')`
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+  flex: 1;
 `;
 
 const Content = styled('div')`
@@ -16,10 +17,10 @@ const Content = styled('div')`
 
 export default function HomePage() {
   return (
-    <HomeWrapper>
+    <RequestWrapper>
       <Content>
         <RequestSnack />
       </Content>
-    </HomeWrapper>
+    </RequestWrapper>
   );
 }

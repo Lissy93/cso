@@ -11,7 +11,9 @@ import RequestPage from './pages/Request';
 import VotesPage from './pages/Votes';
 import NotFoundPage from './pages/NotFound';
 
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './components/Furniture/Navbar/Navbar';
+import Footer from './components/Furniture/Footer';
+import Loading from './components/Furniture/Loading';
 import { isAuthenticated } from './services/authService';
 import supabase from './services/supabaseClient';
 
@@ -30,7 +32,7 @@ const customTheme = createTheme({
     },
     background: {
       paper: '#161719',
-    },
+  },
     mode: 'dark',
   },
 });
@@ -45,7 +47,7 @@ const ProtectedRoute = (props: { component: JSX.Element; }) => {
   });
 
   return (
-    <Show when={authCheckComplete()} fallback={<div>Loading authentication...</div>}>
+    <Show when={authCheckComplete()} fallback={<Loading />}>
       {isAuthenticated() ? props.component : <Navigate href="/login" />}
     </Show>
   );
@@ -65,6 +67,7 @@ const AppRoutes = () => {
           <Route path="/vote" element={<ProtectedRoute component={<VotesPage />} />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        <Footer />
         <Toaster
           position="bottom-right"
           toastOptions={{ style: { background: 'var(--background-lighter)', color: 'var(--foreground)',}, }}

@@ -9,7 +9,7 @@ import DownVoteSolid from '../../assets/icons/downvote-solid.svg';
 import DownVoteEmpty from '../../assets/icons/downvote-empty.svg';
 
 const SnackListWrap = styled('ul')`
-  margin: 0;
+  margin: 0.5rem 0 0 0;
   padding: 0;
   list-style: none;
   display: grid;
@@ -106,7 +106,7 @@ const SnackList: Component<SnackListProps> = (props) => {
                 </div>
               </VotesContainer>
             )}
-            <img src={`https://snack-product-photo.as93.workers.dev/${snack.snack_name}/96`} alt="" />
+            <img src={`https://snack-product-photo.as93.workers.dev/${snack.snack_name}/96`} loading="lazy" alt="" />
             {snack.snack_name}
             <Show when={props.allowDeletion}>
               <span class="delete">
