@@ -1,5 +1,7 @@
 import { Component, For, Show } from 'solid-js';
 import { styled } from 'solid-styled-components';
+import { createAutoAnimate } from '@formkit/auto-animate/solid'
+
 import type { Snack, SnackWithVotes, SnackVote, Vote } from '../../typings/Snack';
 import Button from '../atoms/Button';
 
@@ -89,13 +91,20 @@ interface SnackListProps {
 
 const SnackList: Component<SnackListProps> = (props) => {
 
+  const [parent, setEnabled] = createAutoAnimate()
+
+  const temporarilyDisableAnimations = () => {
+    setEnabled(false);
+    setTimeout(() => setEnabled(true), 1600);
+  };
+
   return (
-    <SnackListWrap>
+    <SnackListWrap ref={parent}>
       <For each={props.snacks()}>
         {(snack) => (
           <li>
             { ('Votes' in snack && props.snackVoteChecker) && (
-              <VotesContainer>
+              <VotesContainer onClick={temporarilyDisableAnimations}>
                 <div class="vote-arrow vote-up" onClick={() => props.handleVote ? props.handleVote(snack, 'up') : () => {}}>
                   <img src={props.snackVoteChecker(snack) === 'up' ? UpVoteSolid : UpVoteEmpty} alt="" />
                   <span class="vote-count">{snack.Votes.filter((vote: Vote) => vote.vote === 'up').length}</span>

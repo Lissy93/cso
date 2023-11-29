@@ -3,7 +3,7 @@ import { styled } from 'solid-styled-components';
 import { CircularProgress } from '@suid/material'
 
 const LoadWrap = styled('div')`
-  flex: 1;
+  
   margin: 5rem auto;
   padding: 1rem;
   text-align: center;

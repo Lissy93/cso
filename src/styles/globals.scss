@@ -38,6 +38,10 @@ body {
   }
 } 
 
+main {
+  flex: 1;
+}
+
 #snack-champion-root {
   min-width: 100%;
   display: flex;

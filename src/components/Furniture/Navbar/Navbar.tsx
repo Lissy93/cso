@@ -27,7 +27,7 @@ const Navbar: Component = () => {
           <li><a href="/profile">Your Profile</a></li>
           <li onClick={() => { setMenuOpen(!menuOpen()) }}>
             <span>{session()?.user_metadata?.full_name || 'User'}</span>
-            <img src={session()?.user_metadata.picture} alt="Profile" width="38" />
+            <img src={session()?.user_metadata.picture} alt="😋" width="38" />
           </li>
           </>
         ) : (

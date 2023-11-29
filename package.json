@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.1",
     "@motionone/solid": "^10.16.4",
     "@solidjs/router": "^0.9.1",
     "@suid/material": "^0.15.1",

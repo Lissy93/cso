@@ -1,6 +1,8 @@
-import { JSX, createEffect, createSignal, Show } from 'solid-js';
+import { JSX, createEffect, createSignal, Show, onMount } from 'solid-js';
 import { ThemeProvider, createTheme } from '@suid/material/styles';
 import { Toaster } from 'solid-toast';
+// import { createAutoAnimateDirective } from '@formkit/auto-animate/solid'
+import autoAnimate from '@formkit/auto-animate'
 
 import { Router, Routes, Route, Navigate } from '@solidjs/router';
 import LoginPage from './pages/LogIn';
@@ -38,7 +40,6 @@ const customTheme = createTheme({
 });
 
 const ProtectedRoute = (props: { component: JSX.Element; }) => {
-
   const [authCheckComplete, setAuthCheckComplete] = createSignal(false);
 
   createEffect(async () => {
@@ -54,19 +55,29 @@ const ProtectedRoute = (props: { component: JSX.Element; }) => {
 };
 
 const AppRoutes = () => {
+
+  let listRef: any;
+  onMount(() => {
+    if (listRef) {
+      autoAnimate(listRef, { duration: 500 });
+    }
+  });
+
   return (
     <Router>
       <ThemeProvider theme={customTheme}>
         <Navbar />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/" element={<ProtectedRoute component={<HomePage />} />} />
-          <Route path="/profile" element={<ProtectedRoute component={<ProfilePage />} />} />
-          <Route path="/request" element={<ProtectedRoute component={<RequestPage />} />} />
-          <Route path="/vote" element={<ProtectedRoute component={<VotesPage />} />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <main ref={listRef}>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/" element={<ProtectedRoute component={<HomePage />} />} />
+            <Route path="/profile" element={<ProtectedRoute component={<ProfilePage />} />} />
+            <Route path="/request" element={<ProtectedRoute component={<RequestPage />} />} />
+            <Route path="/vote" element={<ProtectedRoute component={<VotesPage />} />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </main>
         <Footer />
         <Toaster
           position="bottom-right"
