@@ -8,7 +8,7 @@ const NotFoundWrapper = styled('div')`
   align-items: center;
 
   h1 {
-    font-size: 30vw;
+    font-size: 20vw;
     text-align: center;
     text-shadow: 20px 20px 20px #000000b2, -4px -4px 4px black;
     opacity: 0.15;
