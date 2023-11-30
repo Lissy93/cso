@@ -87,6 +87,8 @@ interface SnackListProps {
   handleDeletion?: (snack: Snack | SnackWithVotes) => void;
   handleVote?: (snack: SnackWithVotes, vote: SnackVote) => void;
   snackVoteChecker?: (snack: SnackWithVotes) => SnackVote | null;
+  allowAddition?: boolean;
+  handleAddition?: (snack: Snack) => void;
 }
 
 const SnackList: Component<SnackListProps> = (props) => {
@@ -124,6 +126,16 @@ const SnackList: Component<SnackListProps> = (props) => {
                 onClick={() => { props.handleDeletion ? props.handleDeletion(snack) : () => {}}}
               >
                 Delete
+              </Button>
+              </span>
+            </Show>
+            <Show when={props.allowAddition}>
+              <span class="delete">
+              <Button
+                size="small"
+                onClick={() => { props.handleAddition ? props.handleAddition(snack) : () => {}}}
+              >
+                Add Snack
               </Button>
               </span>
             </Show>

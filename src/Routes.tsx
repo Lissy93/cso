@@ -11,6 +11,7 @@ import AboutPage from './pages/About';
 import ProfilePage from './pages/Profile';
 import RequestPage from './pages/Request';
 import VotesPage from './pages/Votes';
+import SnackAi from './pages/SnackAi';
 import NotFoundPage from './pages/NotFound';
 
 import Navbar from './components/Furniture/Navbar/Navbar';
@@ -75,6 +76,7 @@ const AppRoutes = () => {
             <Route path="/profile" element={<ProtectedRoute component={<ProfilePage />} />} />
             <Route path="/request" element={<ProtectedRoute component={<RequestPage />} />} />
             <Route path="/vote" element={<ProtectedRoute component={<VotesPage />} />} />
+            <Route path="/snack-ai" element={<ProtectedRoute component={<SnackAi />} />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
