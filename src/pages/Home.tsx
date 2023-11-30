@@ -3,6 +3,7 @@ import { styled } from 'solid-styled-components';
 
 import RequestSnack from '../components/SnackStuff/RequestSnack';
 import SnackVoting from '../components/SnackStuff/SnackVoting';
+import SnackSuggestions from '../components/SnackStuff/SnackSuggestions';
 
 const HomeWrapper = styled('div')`
   padding-bottom: 2rem;
@@ -51,6 +52,7 @@ export default function HomePage() {
           description="Show these newly requested snacks some love if you want to see them in the office!"
         />
         <SnackVoting style="grid-column: 1 / -1;" showSortMenu={true} snackLimit={20} showShowMoreButton={true} />
+        <SnackSuggestions style="grid-column: 1 / -1;"  />
       </Content>
     </HomeWrapper>
   );

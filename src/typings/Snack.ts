@@ -6,7 +6,7 @@ export interface Snack {
   snack_name: string;
   user_id: string;
   created_at: string;
-  snack_category: SnackCategory;
+  snack_category?: SnackCategory;
   snack_meta: string;
 }
 
