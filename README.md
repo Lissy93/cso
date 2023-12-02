@@ -38,8 +38,22 @@ So that the fridge is always well stocked with food people actually love.
 - Admin portal, where snack inventory can be managed
 
 ### Screenshots
-<!-- 
-### Standards
+
+<p align="center">
+<img width="700" src="https://i.ibb.co/xHbTtSF/snack-champion-home.png" />
+</p>
+
+### Info
+
+<details>
+  <summary><b>Tech Stack</b></summary
+
+Built using Solid.js <sup>[[1]](https://www.solidjs.com/)</sup> on the frontend (along with TS <sup>[[2]](https://www.typescriptlang.org/)</sup> and SCSS <sup>[[3]](https://sass-lang.com/)</sup>), tested with Jest <sup>[[4]](https://jestjs.io/)</sup>, bundled with Vite <sup>[[5]](https://vitejs.dev/)</sup>. The data is stored using a Postgress <sup>[[6]](https://www.postgresql.org/)</sup> DB via Supabase <sup>[[7]](https://supabase.com/)</sup>, with the frontend deployed to Netlify <sup>[[8]](https://www.netlify.com/)</sup> and the code hosted on GitHub <sup>[[9]](https://github.com)</sup> and CI/CD workflows managed with GH Actions<sup>[[10]](https://docs.github.com/en/actions)</sup>.
+
+</details>
+
+<details>
+  <summary><b>Standards</b></summary
 
 - **Configurable:** Set your companies name, branding and terminology
 - **International:** No hard-coded copy, for easy language translations
@@ -56,7 +70,9 @@ So that the fridge is always well stocked with food people actually love.
 - **SEO** SSR, meta
 - **Compatible:** Consistent across all modern browser and devices, with fallback polyfills to support legacy environments
 - **Privacy Respecting:** No invasive tracking, and the user can export or delete their data at any time
-- **Neat:** Consistent coding standards are implemented with Prettier and ESLint -->
+- **Neat:** Consistent coding standards are implemented with Prettier and ESLint 
+
+</details>
 
 <details>
   <summary><b>Future plans</b></summary
@@ -66,10 +82,7 @@ I think it would be pretty fun to extend this, to automate as much of the proces
 That would basically be my whole job, automated.
   
 </details>
- 
-### Tech Stack
 
-Built using Solid.js <sup>[[1]](https://www.solidjs.com/)</sup> on the frontend (along with TS <sup>[[2]](https://www.typescriptlang.org/)</sup> and SCSS <sup>[[3]](https://sass-lang.com/)</sup>), tested with Jest <sup>[[4]](https://jestjs.io/)</sup>, bundled with Vite <sup>[[5]](https://vitejs.dev/)</sup>. The data is stored using a Postgress <sup>[[6]](https://www.postgresql.org/)</sup> DB via Supabase <sup>[[7]](https://supabase.com/)</sup>, with the frontend deployed to Netlify <sup>[[8]](https://www.netlify.com/)</sup> and the code hosted on GitHub <sup>[[9]](https://github.com)</sup> and CI/CD workflows managed with GH Actions<sup>[[10]](https://docs.github.com/en/actions)</sup>.
 
 ---
 
@@ -139,9 +152,8 @@ create table
 
 #### Enums
 ```
-snack_category:	sweet, savory, healthy, drink	
-
-vote_type:	up, down
+snack_category: sweet, savory, healthy, drink	
+vote_type: up, down
 ```
 
 ## Development
