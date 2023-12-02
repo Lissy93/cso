@@ -1,0 +1,71 @@
+
+PRIVACY POLICY FOR SNACK CHAMPION
+---------------------------------
+
+Effective Date: 1st December 2023
+
+Welcome to Snack Champion! Your privacy is important to us. This Privacy Policy explains how we collect, use, protect, and handle your personal information when you use our app.
+
+
+1. INFORMATION WE COLLECT
+-------------------------
+When you log in using your work Google Workspace account or Single Sign-On Provider, we access your full name, email address, and picture. This information is displayed in the app's user interface but is not stored in our databases.
+
+Data Collection
+- Snack Preferences: We store your requested snacks, votes on snacks, and preferences including allergens and dietary requirements.
+- Analytics and Error Tracking: We use anonymized analytics (via a self-hosted Plausible instance) and error tracking (via a self-hosted GlitchTip instance) with no personally identifiable information collected. You may opt out of these features at any time.
+
+
+2. STORAGE OF INFORMATION
+-------------------------
+All data is encrypted at rest using libsodium's high-level cryptographic algorithms, implemented via the pgsodium PostgreSQL extension.
+
+
+3. USE OF INFORMATION
+---------------------
+Your information is used to:
+- Display your profile within the app.
+- Manage your snack requests and preferences.
+- Improve app functionality and user experience.
+- Conduct anonymized analytics and error tracking to enhance app performance.
+
+
+4. SHARING OF INFORMATION
+-------------------------
+Your requested snacks and the total vote counts are visible to other users, but your individual identity and votes are not disclosed. Your preferences are never shared with other users.
+
+
+5. YOUR RIGHTS AND CHOICES
+--------------------------
+- Data Access and Export: You may view or export your data at any time.
+- Account Deletion: You have the right to delete your account and all associated data.
+- Opt-Out: You can disable error tracking and analytics. We also respect browser Do Not Track settings and ad-blockers.
+
+
+6. SECURITY
+-----------
+We are committed to protecting your data. Our use of encryption and open-source code allows for transparency and security verification.
+
+
+7. THIRD-PARTY SERVICES
+-----------------------
+We utilize the following services:
+- Cloudflare (domain, DNS, caching, DDoS protection)
+- Netlify (frontend hosting)
+- Supabase (Postgres database hosting)
+- Google (OAuth)
+- OpenAI (Snack AI feature)
+- Tesco.com (product photos)
+- GitHub (code hosting and CI/CD)
+- Solid.js, TS, SCSS, Vite (frontend development)
+
+
+8. CONTACT US
+-------------
+For any data or privacy concerns, please contact us at snack-champion@mail.alicia.omg.lol.
+
+
+9. CHANGES TO THIS POLICY
+-------------------------
+We may update this policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
+
