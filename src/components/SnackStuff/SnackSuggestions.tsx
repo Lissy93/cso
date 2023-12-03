@@ -1,7 +1,7 @@
 import { styled } from 'solid-styled-components';
 import toast from 'solid-toast';
 import { createResource, createSignal, createEffect } from 'solid-js';
-import { Alert, AlertTitle, TextField } from '@suid/material';
+import { Alert, AlertTitle, TextField, CircularProgress } from '@suid/material';
 
 import { fetchUserFromSession } from '../../services/authService';
 import supabase from '../../services/supabaseClient';
@@ -29,7 +29,7 @@ const doAiStuff = async (prompt: string) => {
 };
 
 
-interface SnackVotes  { upvoted: string[], downvoted: string[] }
+interface SnackVotes  { upvoted: string[], downvoted: string[], dietaryRequirements: string, likesDislikes: string }
 
 const fetchUserSnackPreferences = async (): Promise<SnackVotes | null> => {
   const userId = (await fetchUserFromSession())?.id;
@@ -44,9 +44,20 @@ const fetchUserSnackPreferences = async (): Promise<SnackVotes | null> => {
     return null;
   }
 
-  const results: { upvoted: string[], downvoted: string[] } = {
+  const preferences = await supabase
+    .from('Preferences')
+    .select('dietary_requirements, snack_preferences')
+    .eq('user_id', userId)
+    .single();
+  
+
+  const { dietary_requirements, snack_preferences } = (preferences.data || {});
+
+  const results: SnackVotes = {
     upvoted: [],
     downvoted: [],
+    dietaryRequirements: (dietary_requirements || []).join(','),
+    likesDislikes: snack_preferences || '',
   };
 
   response.data.forEach(snack => {
@@ -103,7 +114,12 @@ export default function SnackAi(props: SnackSuggestionProps) {
     let initialPrompt = prompt;
     if (props.onAiPage) { initialPrompt = initialPrompt.split('twelve').join('twenty seven') }
     const extras = extraPreferences() ? `The user has added this additional info for their snack preferences: ${extraPreferences().toString()}\n\n` : '';
-    const firstPrompt = `${initialPrompt}\n\n Your first dataset is: ${(snackVotes || {}).toString()}.\n\n${extras}Please respond with suggestions.`;
+    const dietRequirements = snackVotes?.dietaryRequirements ? `\nThe user has stated they have the following dietary requirements: ${snackVotes.dietaryRequirements}\n\n` : '';
+    const likesDislikes = snackVotes?.likesDislikes ? `\nThe user has also stated that they like ${snackVotes.likesDislikes}\n\n` : '';
+    const firstPrompt = `${initialPrompt}\n\n`
+      + `Your first dataset is: Upvotes: [${(snackVotes?.upvoted || []).join(',')}], Downvotes: [${snackVotes?.downvoted.join(',')}].\n\n`
+      + `${dietRequirements} ${likesDislikes}`
+      + `${extras}Please respond with suggestions.\n\n`;
 
     doAiStuff(firstPrompt).then((response) => {
       const aiAnswers = formatAiResponse(response.choices[0].message.content || '', props.onAiPage);
@@ -191,6 +207,7 @@ export default function SnackAi(props: SnackSuggestionProps) {
       { enoughVotes() && aiResponse().length === 0 && (
         <>
           <p>Nothing yet, check back soon.</p>
+          <CircularProgress color="secondary" size="64px" />
         </>
       )}
     </Card>
