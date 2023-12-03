@@ -74,7 +74,7 @@ main {
   background: var(--background-lighter) !important;
 }
 
-#allergen-select-label {
-  color: white;
+#allergen-select-label, #more-prefs-label, #complete-dietary-preferences {
+  color: var(--foreground);
 }
-
+.MuiAlert-message { width: 100%; }
