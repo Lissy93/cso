@@ -1,5 +1,5 @@
 import { styled } from 'solid-styled-components';
-import { createSignal } from 'solid-js';
+import { createResource, createSignal, onMount } from 'solid-js';
 import {
   FormGroup,
   FormControl,
@@ -14,6 +14,9 @@ import {
 
 import Card from '../atoms/Card';
 import Button from '../atoms/Button';
+import supabase from '../../services/supabaseClient';
+import { fetchUserFromSession } from '../../services/authService';
+import toast from 'solid-toast';
 
 const SubHeading = styled('h2')`
   margin: 0.25rem 0;
@@ -32,25 +35,73 @@ const SmallText = styled('p')`
   margin: 0;
 `;
 
+interface Preferences {
+  theme: string;
+  enable_notifications: boolean;
+  language: string;
+  enable_error_reporting: boolean;
+  enable_analytics: boolean;
+};
+
 export default function AccountPreferences() {
 
   const [theme, setTheme] = createSignal('light');
   const [notifications, setNotifications] = createSignal(false);
   const [language, setLanguage] = createSignal('en-GB');
-  const [errorTracking, setErrorTracking] = createSignal(false);
+  const [errorTracking, setErrorTracking] = createSignal(true);
   const [analytics, setAnalytics] = createSignal(false);
-  // const [disableAnimations, setDisableAnimations] = createSignal(false);
-  // const [highContrast, setHighContrast] = createSignal(false);
-  // const [largeFont, setLargeFont] = createSignal(false);
 
-  const handleSave = () => {
-    // TODO: Implement save logic
-    console.log('Preferences saved:',{ theme: theme(), notifications: notifications(), language: language(), errorTracking: errorTracking(), analytics: analytics() });
+  onMount(async () => {
+    fetchUserPreferences().then((prefs: Preferences) => {
+      setTheme(prefs.theme);
+      setNotifications(prefs.enable_notifications);
+      setLanguage(prefs.language);
+      setErrorTracking(prefs.enable_error_reporting);
+      setAnalytics(prefs.enable_analytics);
+    });
+  });
+
+  const handleSave = async () => {
+    const userId = (await fetchUserFromSession())?.id;
+    const updatedPrefs = {
+      theme: theme(),
+      enable_notifications: notifications(),
+      language: language(),
+      enable_error_reporting: errorTracking(),
+      enable_analytics: analytics(),
+    };
+
+    const { error } = await supabase
+      .from('Preferences')
+      .upsert([{ user_id: userId, ...updatedPrefs }]);
+
+    if (error) {
+      toast.error('Unable to save preferences.');
+    } else {
+      toast.success('Preferences saved.');
+    }
   };
 
+  async function fetchUserPreferences() {
+    const userId = (await fetchUserFromSession())?.id;
+    if (!userId) return null;
+  
+    const { data, error } = await supabase
+      .from('Preferences')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+  
+    if (error) {
+      console.error('Error fetching preferences:', error);
+      return null;
+    }  
+    return data || {};
+  }
+
   return (
-    <Card style="grid-row-start: span 3;">
-    <SubHeading>Preferences</SubHeading>
+    <Card style="grid-row-start: span 2;">
+    <SubHeading>Site Preferences</SubHeading>
     <FormControl>
       <PreferenceSection>
         <h3>Theme</h3>
@@ -97,35 +148,28 @@ export default function AccountPreferences() {
       <PreferenceSection>
         <h3>Reporting</h3>
         <SmallText>Enabling these options help me improve the application.</SmallText>
+
         <FormGroup>
           <FormControlLabel control={
-            <Checkbox value={errorTracking()} onChange={(_event, newVal) => { setErrorTracking(newVal) }}/>
+            <Checkbox 
+              checked={errorTracking()} 
+              onChange={(event) => setErrorTracking(event.target.checked)}
+            />
           } label="Allow error reporting" />
           <FormControlLabel control={
-            <Checkbox value={analytics()} onChange={(_event, newVal) => { setAnalytics(newVal) }}/>
+            <Checkbox 
+              checked={analytics()} 
+              onChange={(event) => setAnalytics(event.target.checked)}
+            />
           } label="Allow anonymized usage analytics" />
         </FormGroup>
+
         <SmallText>
           Error tracking is handled using a self-hosted instance of <a href="https://glitchtip.com/">GlitchTip</a>.<br />
           Anonymized analytics are logged with a self-hosted instance of <a href="https://plausible.io/">Plausible</a>.<br />
           No personally identifiable information is collected. You can opt-out at any time.
         </SmallText>
       </PreferenceSection>
-
-      {/* <PreferenceSection>
-        <h3>Accessibility</h3>
-        <FormGroup>
-          <FormControlLabel disabled={true} control={
-            <Checkbox value={disableAnimations()} onChange={(_event, newVal) => { setDisableAnimations(newVal) }}/>
-          } label="Disable Animations" />
-          <FormControlLabel disabled={true} control={
-            <Checkbox value={highContrast()} onChange={(_event, newVal) => { setHighContrast(newVal) }}/>
-          } label="Use High-Contrast Mode" />
-          <FormControlLabel disabled={true} control={
-            <Checkbox value={largeFont()} onChange={(_event, newVal) => { setLargeFont(newVal) }}/>
-          } label="Use Extra-Large Font" />
-        </FormGroup>
-      </PreferenceSection> */}
 
       <PreferenceSection>
       <Button size="medium" onClick={handleSave}>Save Changes</Button>
