@@ -26,6 +26,7 @@ const Footer: Component = () => {
 
   const footerContent = {
     appName: 'Snack Champion',
+    appUrl: '/about',
     githubUrl: 'https://github.com/lissy93/cso',
     developer: 'Alicia Sykes',
     developerUrl: 'https://aliciasykes.com',
@@ -36,7 +37,7 @@ const Footer: Component = () => {
 
   return (
     <StyledFooter>
-      <a href={footerContent.githubUrl}>{footerContent.appName}</a> is
+      <a href={footerContent.appUrl}>{footerContent.appName}</a> is
       licensed under <a href={footerContent.licenseUrl}>{footerContent.license}</a> ©
       <a href={footerContent.developerUrl}>{footerContent.developer}</a> {footerContent.licenseDate} |
       Source code available on <a href={footerContent.githubUrl}>GitHub</a>.
