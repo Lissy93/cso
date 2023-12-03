@@ -2,6 +2,8 @@ import { createSignal } from 'solid-js';
 import { styled } from 'solid-styled-components';
 import Card from '../atoms/Card';
 import Button from '../atoms/Button';
+import { fetchUserFromSession, logout } from '../../services/authService';
+import supabase from '../../services/supabaseClient';
 
 import {
   Dialog,
@@ -11,6 +13,7 @@ import {
   DialogTitle,
   Alert, AlertTitle,
 } from '@suid/material';
+import toast from 'solid-toast';
 
 const SubHeading = styled('h2')`
   margin: 0.25rem 0;
@@ -39,6 +42,19 @@ export default function AccountInfo() {
   const handleClickOpen = () => { setOpen(true); };
   const handleClose = () => { setOpen(false); };
 
+  const deleteAccount = async () => {
+    const userId = (await fetchUserFromSession())?.id;
+    if (!userId) return;
+    const { error } = await supabase.from('Users').delete().eq('id', userId);
+    if (error) {
+      toast.error(`Unable to delete account.\n${error.message}`);
+      return;
+    }
+    toast.success('Account deleted successfully.\nGood bye.');
+    logout();
+    window.location.reload();
+  };
+
   return (
     <Card>
       <SubHeading>Account Deletion</SubHeading>
@@ -62,7 +78,7 @@ export default function AccountInfo() {
         </DialogContent>
         <DialogActions>
           <Button size="small" onClick={handleClose}>Noooo! I made a mistake, take me back!</Button>
-          <Button size="small" onClick={handleClose}>Yup, I hate snacks</Button>
+          <Button size="small" onClick={deleteAccount}>Yup, I hate snacks</Button>
         </DialogActions>
       </Dialog>
     </Card>
