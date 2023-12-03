@@ -5,8 +5,6 @@ import { fetchUserFromSession, useUserEmail } from '../../services/authService';
 import supabase from '../../services/supabaseClient';
 import toast from 'solid-toast';
 import { Show, createResource, createSignal, createEffect, onCleanup } from 'solid-js';
-import { count } from 'console';
-
 
 const WelcomeMsg = styled('h2')`
   font-size: 3rem;

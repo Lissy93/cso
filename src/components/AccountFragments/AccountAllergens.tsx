@@ -150,7 +150,7 @@ export default function UserAllergensForm(props: Props) {
           color="primary"
           value={daysInOffice()}
           exclusive
-          onChange={(event, newAlignment) => {
+          onChange={(_event, newAlignment) => {
             setDaysInOffice(newAlignment);
           }}
         >
