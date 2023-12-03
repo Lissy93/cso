@@ -1,6 +1,5 @@
 import { Component, For, Show } from 'solid-js';
 import { styled } from 'solid-styled-components';
-import { createAutoAnimate } from '@formkit/auto-animate/solid'
 
 import type { Snack, SnackWithVotes, SnackVote, Vote } from '../../typings/Snack';
 import Button from '../atoms/Button';
@@ -30,6 +29,14 @@ const SnackListWrap = styled('ul')`
     img {
       width: 3rem;
       border-radius: 4px;
+    }
+    .snack-name {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
     .delete {
       display: none;
@@ -93,20 +100,13 @@ interface SnackListProps {
 
 const SnackList: Component<SnackListProps> = (props) => {
 
-  const [parent, setEnabled] = createAutoAnimate()
-
-  const temporarilyDisableAnimations = () => {
-    setEnabled(false);
-    setTimeout(() => setEnabled(true), 1600);
-  };
-
   return (
-    <SnackListWrap ref={parent}>
+    <SnackListWrap>
       <For each={props.snacks()}>
         {(snack) => (
           <li>
             { ('Votes' in snack && props.snackVoteChecker) && (
-              <VotesContainer onClick={temporarilyDisableAnimations}>
+              <VotesContainer>
                 <div class="vote-arrow vote-up" onClick={() => props.handleVote ? props.handleVote(snack, 'up') : () => {}}>
                   <img src={props.snackVoteChecker(snack) === 'up' ? UpVoteSolid : UpVoteEmpty} alt="" />
                   <span class="vote-count">{snack.Votes.filter((vote: Vote) => vote.vote === 'up').length}</span>
@@ -118,7 +118,7 @@ const SnackList: Component<SnackListProps> = (props) => {
               </VotesContainer>
             )}
             <img src={`https://snack-product-photo.as93.workers.dev/${snack.snack_name}/96`} loading="lazy" alt="" />
-            {snack.snack_name}
+            <span title={snack.snack_name} class="snack-name">{snack.snack_name}</span>
             <Show when={props.allowDeletion}>
               <span class="delete">
               <Button
