@@ -1,21 +1,14 @@
-import { useUserEmail } from '../services/authService';
 import { styled } from 'solid-styled-components';
 
 import RequestSnack from '../components/SnackStuff/RequestSnack';
 import SnackVoting from '../components/SnackStuff/SnackVoting';
 import SnackSuggestions from '../components/SnackStuff/SnackSuggestions';
+import SnackCountdown from '../components/SnackStuff/SnackCountdown';
+import PromptForPreferences from '../components/other/PromptForPreferences';
 
 const HomeWrapper = styled('div')`
   padding-bottom: 2rem;
   flex: 1;
-`;
-
-const WelcomeMsg = styled('h2')`
-  font-size: 3rem;
-  margin: 0.5rem auto 1rem auto;
-  text-transform: capitalize;
-  max-width: 1200px;
-  width: 80vw;
 `;
 
 const Content = styled('div')`
@@ -33,15 +26,10 @@ const Content = styled('div')`
 
 export default function HomePage() {
 
-  const userEmail = useUserEmail();
-
-  const getNameFromEmail = (email: string) => {
-    return email.split('.')[0] || email;
-  };
-
   return (
     <HomeWrapper>
-      <WelcomeMsg>Hey {getNameFromEmail(userEmail())} 👋</WelcomeMsg>
+      <PromptForPreferences />
+      <SnackCountdown />
       <Content>
         <RequestSnack style="grid-column-start: span 2;" />
         <SnackVoting
