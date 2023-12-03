@@ -1,5 +1,5 @@
 import { styled } from 'solid-styled-components';
-import { createResource, createSignal, onMount } from 'solid-js';
+import { createSignal, onMount } from 'solid-js';
 import {
   FormGroup,
   FormControl,
@@ -153,13 +153,13 @@ export default function AccountPreferences() {
           <FormControlLabel control={
             <Checkbox 
               checked={errorTracking()} 
-              onChange={(event) => setErrorTracking(event.target.checked)}
+              onChange={(_event, newVal) => setErrorTracking(newVal)}
             />
           } label="Allow error reporting" />
           <FormControlLabel control={
             <Checkbox 
               checked={analytics()} 
-              onChange={(event) => setAnalytics(event.target.checked)}
+              onChange={(_event, newVal) => setAnalytics(newVal)}
             />
           } label="Allow anonymized usage analytics" />
         </FormGroup>
