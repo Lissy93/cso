@@ -77,7 +77,7 @@ const LoginPage = () => {
           <p class="intro line-2">A quick login and you're on the snack attack track!</p>
           <p class="what">Securely authenticate with your company SSO in order to put in snack requests</p>
           <Button onClick={signInWithGoogle} size="large">Let's Go!</Button>
-          <SnackBot width="180" src="https://i.ibb.co/d43WK4Z/snack-champ-robot-transparent.png" title="Hello World 👋" />
+          <SnackBot width="180" src="/snack-champ-bot.png" title="Hello World 👋" />
         </Card>
       </div>
     </>
