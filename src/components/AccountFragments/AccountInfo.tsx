@@ -41,6 +41,16 @@ const SmallText = styled('p')`
   margin: 0.5rem 0;
 `;
 
+const ManageAccountButton = styled('a')`
+  background: var(--primary);
+  color: var(--foreground);
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-family: PoppinsBold;
+`;
+
 
 const formatDate = (date: string | undefined) => {
   if (!date) return '';
@@ -55,7 +65,7 @@ export default function AccountInfo() {
   const [session] = createResource(fetchUserFromSession);
 
   return (
-    <Card style="grid-row-start: span 2;">
+    <Card style="grid-row-start: span 1;">
       <SubHeading>Account</SubHeading>
       <DataTable>
         <Show when={session()?.user_metadata}>
@@ -102,6 +112,10 @@ export default function AccountInfo() {
         This account is managed by an SSO provider.<br />
         To update, export or delete your account data, you must do so via their website.
       </SmallText>
+
+      {session()?.user_metadata?.iss && (
+        <ManageAccountButton href={session()?.user_metadata?.iss}>Manage Account</ManageAccountButton>
+      ) }
     </Card>
   );
 }
