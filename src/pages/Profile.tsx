@@ -8,7 +8,6 @@ import AccountInfo from '../components/AccountFragments/AccountInfo';
 import AccountDeletion from '../components/AccountFragments/AccountDeletion';
 import AccountData from '../components/AccountFragments/AccountData';
 import AccountAllergens from '../components/AccountFragments/AccountAllergens';
-import { Alert, AlertTitle } from "@suid/material";
 
 const ProfileWrapper = styled('div')`
   display: grid;
@@ -24,23 +23,27 @@ const SubHeading = styled('h2')`
   margin: 0.25rem 0;
 `;
 
+const AboutText = styled('p')`
+  margin: 0;
+  font-family: RobotoMono, monospace;
+  font-size: 0.9rem;
+  a { color: var(--primary); }
+`;
+
 export default function Profile () {
 
   return (
     
     <>
-    <Alert severity="info">
-      <AlertTitle>Profile Page Info</AlertTitle>
-        This page is still a work in progress....
-    </Alert>
     <ProfileWrapper>
       <AccountInfo />
       <AccountAllergens />
-      <AccountPreferences />
       <AccountData />
+      <AccountPreferences />
       <AccountDeletion />
       <Card style="grid-column: 1 / -1;">
-        <SubHeading>About & Privacy</SubHeading>
+        <SubHeading>Further Info</SubHeading>
+        <AboutText>For privacy policy, ToS, docs and more - please see the <a href="/about">About Page</a>.</AboutText>
       </Card>      
     </ProfileWrapper>
     </>
