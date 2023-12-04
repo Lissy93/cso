@@ -39,9 +39,18 @@ So that the fridge is always well stocked with food people actually love.
 
 ### Screenshots
 
-<p align="center">
-<img width="700" src="https://i.ibb.co/xHbTtSF/snack-champion-home.png" />
-</p>
+https://github.com/Lissy93/cso/assets/1862727/a3fd8f11-3156-4c1e-8124-771ce2d872f2
+
+<details>
+
+  <summary>Screenshot</summary>
+
+  <p align="center">
+  <img width="700" src="https://i.ibb.co/xHbTtSF/snack-champion-home.png" />
+  </p>
+  
+</details>
+
 
 ### Info
 
